@@ -7,15 +7,11 @@ pub const Socket = struct {
     _stream: std.net.Stream,
 
     pub fn init() !Socket {
-        const host = [4]u8{127, 0, 0, 1};
+        const host = [4]u8{ 127, 0, 0, 1 };
         const port = 8003;
         const addr = net.Address.initIp4(host, port);
-        const socket = try std.posix.socket(
-            addr.any.family,
-            std.posix.SOCK.STREAM,
-            std.posix.IPPROTO.TCP
-            );
+        const socket = try std.posix.socket(addr.any.family, std.posix.SOCK.STREAM, std.posix.IPPROTO.TCP);
         const stream = net.Stream{ .handle = socket };
-        return Socket{._address = addr, ._stream = stream };
+        return Socket{ ._address = addr, ._stream = stream };
     }
 };
